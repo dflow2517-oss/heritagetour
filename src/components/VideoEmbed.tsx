@@ -6,25 +6,54 @@ interface VideoEmbedProps {
   posterUrl?: string | null
 }
 
-function isRealEmbedUrl(url: string | null): url is string {
-  return !!url && !url.includes('placeholder')
+function getEmbedSrc(url: string): string | null {
+  try {
+    const u = new URL(url)
+
+    // YouTube Shorts: youtube.com/shorts/ID
+    if (u.pathname.startsWith('/shorts/')) {
+      const id = u.pathname.replace('/shorts/', '').split('/')[0]
+      return `https://www.youtube.com/embed/${id}`
+    }
+
+    // Standard YouTube: youtube.com/watch?v=ID
+    const v = u.searchParams.get('v')
+    if (v) return `https://www.youtube.com/embed/${v}`
+
+    // Short link: youtu.be/ID
+    if (u.hostname === 'youtu.be') {
+      const id = u.pathname.slice(1).split('/')[0]
+      return `https://www.youtube.com/embed/${id}`
+    }
+
+    // Instagram reel already in embed form or direct URL
+    if (u.hostname.includes('instagram.com')) {
+      return url.replace(/\/?$/, '/embed/')
+    }
+
+    return null
+  } catch {
+    return null
+  }
 }
 
-function toEmbedSrc(url: string): string {
-  // Convert instagram.com/reel/ID/  →  instagram.com/reel/ID/embed/
-  return url.replace(/\/?$/, '/embed/')
+function isPlaceholder(url: string | null): boolean {
+  return !url || url.includes('placeholder')
 }
 
 export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
-  if (isRealEmbedUrl(embedUrl)) {
+  const src = !isPlaceholder(embedUrl) ? getEmbedSrc(embedUrl!) : null
+
+  if (src) {
     return (
       <iframe
-        src={toEmbedSrc(embedUrl)}
+        src={src}
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810' }}
         allowFullScreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         loading="lazy"
-        title={label ?? 'Instagram Reel'}
+        title={label ?? 'Video'}
       />
     )
   }
