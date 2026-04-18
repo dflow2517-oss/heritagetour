@@ -91,7 +91,7 @@ begin
     '/images/stops/IMG_0470.webp',
     'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
     '3:15',
-    null, 'Wolf Goes West: T Anchor Cabin'
+    'https://youtube.com/shorts/qJ_s6HEkUZA', 'Wolf Goes West: T Anchor Cabin'
   ),
 
   -- 06  First United Methodist Church
