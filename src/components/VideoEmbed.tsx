@@ -13,17 +13,17 @@ function getEmbedSrc(url: string): string | null {
     // YouTube Shorts: youtube.com/shorts/ID
     if (u.pathname.startsWith('/shorts/')) {
       const id = u.pathname.replace('/shorts/', '').split('/')[0]
-      return `https://www.youtube.com/embed/${id}`
+      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
     }
 
     // Standard YouTube: youtube.com/watch?v=ID
     const v = u.searchParams.get('v')
-    if (v) return `https://www.youtube.com/embed/${v}`
+    if (v) return `https://www.youtube.com/embed/${v}?playsinline=1&rel=0`
 
     // Short link: youtu.be/ID
     if (u.hostname === 'youtu.be') {
       const id = u.pathname.slice(1).split('/')[0]
-      return `https://www.youtube.com/embed/${id}`
+      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
     }
 
     // Instagram reel already in embed form or direct URL
@@ -51,7 +51,7 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810' }}
         allowFullScreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         loading="lazy"
         title={label ?? 'Video'}
       />
