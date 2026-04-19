@@ -35,17 +35,16 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
     const src = embedUrl!.startsWith('/videos/')
       ? embedUrl!
       : `/videos/${embedUrl!.split('/').pop()}`
-    const ismov = src.toLowerCase().includes('.mov')
     return (
       <video
         poster={posterUrl ?? undefined}
         controls
         playsInline
-        preload="none"
+        preload="metadata"
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
       >
-        <source src={src} type={ismov ? 'video/quicktime' : 'video/mp4'} />
+        <source src={src} type="video/mp4" />
       </video>
     )
   }
