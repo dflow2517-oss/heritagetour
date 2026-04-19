@@ -6,71 +6,35 @@ interface VideoEmbedProps {
   posterUrl?: string | null
 }
 
-function getEmbedSrc(url: string): string | null {
-  try {
-    const u = new URL(url)
-
-    // YouTube Shorts: youtube.com/shorts/ID
-    if (u.pathname.startsWith('/shorts/')) {
-      const id = u.pathname.replace('/shorts/', '').split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
-    }
-
-    // Standard YouTube: youtube.com/watch?v=ID
-    const v = u.searchParams.get('v')
-    if (v) return `https://www.youtube.com/embed/${v}?playsinline=1&rel=0`
-
-    // Short link: youtu.be/ID
-    if (u.hostname === 'youtu.be') {
-      const id = u.pathname.slice(1).split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
-    }
-
-    // Instagram reel already in embed form or direct URL
-    if (u.hostname.includes('instagram.com')) {
-      return url.replace(/\/?$/, '/embed/')
-    }
-
-    return null
-  } catch {
-    return null
-  }
-}
-
 function isPlaceholder(url: string | null): boolean {
   return !url || url.includes('placeholder')
 }
 
 export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
-  const src = !isPlaceholder(embedUrl) ? getEmbedSrc(embedUrl!) : null
-
-  if (src) {
-    return (
-      <iframe
-        src={src}
-        className="w-full aspect-video"
-        style={{ border: '2px solid #2a1810' }}
-        allowFullScreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        loading="lazy"
-        title={label ?? 'Video'}
-      />
-    )
-  }
+  const hasVideo = !isPlaceholder(embedUrl)
 
   return (
-    <div
-      className="aspect-video flex items-center justify-center relative overflow-hidden press-shadow"
-      style={{ background: '#2a1810', border: '2px solid #2a1810' }}
+    <a
+      href={hasVideo ? embedUrl! : undefined}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block aspect-video flex items-center justify-center relative overflow-hidden press-shadow"
+      style={{
+        background: '#2a1810',
+        border: '2px solid #2a1810',
+        cursor: hasVideo ? 'pointer' : 'default',
+        textDecoration: 'none',
+      }}
     >
       {posterUrl && (
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${posterUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'blur(8px)',
+            opacity: hasVideo ? 0.5 : 0.3,
           }}
         />
       )}
@@ -81,11 +45,11 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
         >
           <Play size={24} style={{ marginLeft: '3px' }} />
         </div>
-        {label && <div className="display-font italic">{label}</div>}
+        {label && <div className="display-font italic text-lg">{label}</div>}
         <div className="type-font text-xs tracking-widest uppercase opacity-70 mt-1">
-          [ Video Coming Soon ]
+          {hasVideo ? '[ Watch on YouTube ]' : '[ Video Coming Soon ]'}
         </div>
       </div>
-    </div>
+    </a>
   )
 }
