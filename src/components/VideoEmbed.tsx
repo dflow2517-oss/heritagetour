@@ -11,13 +11,13 @@ function getEmbedSrc(url: string): string | null {
     const u = new URL(url)
     if (u.pathname.startsWith('/shorts/')) {
       const id = u.pathname.replace('/shorts/', '').split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
+      return `https://www.youtube-nocookie.com/embed/${id}?playsinline=1&rel=0`
     }
     const v = u.searchParams.get('v')
-    if (v) return `https://www.youtube.com/embed/${v}?playsinline=1&rel=0`
+    if (v) return `https://www.youtube-nocookie.com/embed/${v}?playsinline=1&rel=0`
     if (u.hostname === 'youtu.be') {
       const id = u.pathname.slice(1).split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
+      return `https://www.youtube-nocookie.com/embed/${id}?playsinline=1&rel=0`
     }
     return null
   } catch {
