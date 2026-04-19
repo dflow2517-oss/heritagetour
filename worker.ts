@@ -9,10 +9,18 @@ export default {
     if (url.pathname.startsWith('/videos/')) {
       const filename = url.pathname.slice('/videos/'.length)
       const r2Url = `https://pub-83f1ff1abd0c4b679e5f699c7d987364.r2.dev/${filename}`
-      const r2Response = await fetch(r2Url)
+
+      const upstream = new Request(r2Url, {
+        method: request.method,
+        headers: request.headers,
+      })
+      const r2Response = await fetch(upstream)
+
       const headers = new Headers(r2Response.headers)
       headers.set('Access-Control-Allow-Origin', '*')
       headers.set('Cache-Control', 'public, max-age=86400')
+      headers.set('Accept-Ranges', 'bytes')
+
       return new Response(r2Response.body, { status: r2Response.status, headers })
     }
 
