@@ -6,42 +6,23 @@ interface VideoEmbedProps {
   posterUrl?: string | null
 }
 
-function getEmbedSrc(url: string): string | null {
-  try {
-    const u = new URL(url)
-    if (u.pathname.startsWith('/shorts/')) {
-      const id = u.pathname.replace('/shorts/', '').split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
-    }
-    const v = u.searchParams.get('v')
-    if (v) return `https://www.youtube.com/embed/${v}?playsinline=1&rel=0`
-    if (u.hostname === 'youtu.be') {
-      const id = u.pathname.slice(1).split('/')[0]
-      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
-    }
-    return null
-  } catch {
-    return null
-  }
-}
-
 function isPlaceholder(url: string | null): boolean {
   return !url || url.includes('placeholder')
 }
 
 export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
-  const src = !isPlaceholder(embedUrl) ? getEmbedSrc(embedUrl!) : null
+  const hasVideo = !isPlaceholder(embedUrl)
 
-  if (src) {
+  if (hasVideo) {
     return (
-      <iframe
-        src={src}
+      <video
+        src={embedUrl!}
+        poster={posterUrl ?? undefined}
+        controls
+        playsInline
+        preload="none"
         className="w-full aspect-video"
-        style={{ border: '2px solid #2a1810', display: 'block' }}
-        allowFullScreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        loading="lazy"
-        title={label ?? 'Video'}
+        style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
       />
     )
   }
