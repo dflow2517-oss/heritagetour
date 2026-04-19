@@ -31,6 +31,21 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
   const hasVideo = !isPlaceholder(embedUrl)
   const ytId = hasVideo ? getYouTubeId(embedUrl!) : null
 
+  if (hasVideo && !ytId) {
+    return (
+      <video
+        src={embedUrl!}
+        poster={posterUrl ?? undefined}
+        controls
+        playsInline
+        preload="metadata"
+        crossOrigin="anonymous"
+        className="w-full aspect-video"
+        style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
+      />
+    )
+  }
+
   if (hasVideo && ytId) {
     if (playing) {
       return (
