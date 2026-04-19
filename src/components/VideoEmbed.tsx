@@ -44,7 +44,7 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
       >
-        <source src={src} type="video/mp4" />
+        <source src={src} />
       </video>
     )
   }

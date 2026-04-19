@@ -2,6 +2,13 @@ interface Env {
   ASSETS: Fetcher
 }
 
+function videoContentType(filename: string): string {
+  const lower = filename.toLowerCase()
+  if (lower.endsWith('.mov')) return 'video/quicktime'
+  if (lower.endsWith('.webm')) return 'video/webm'
+  return 'video/mp4'
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
@@ -16,15 +23,8 @@ export default {
 
       const r2Response = await fetch(r2Url, { headers: fetchHeaders })
 
-      const lower = filename.toLowerCase()
-      const contentType = lower.endsWith('.mov')
-        ? 'video/mp4'
-        : lower.endsWith('.webm')
-          ? 'video/webm'
-          : 'video/mp4'
-
       const headers = new Headers(r2Response.headers)
-      headers.set('Content-Type', contentType)
+      headers.set('Content-Type', videoContentType(filename))
       headers.set('Access-Control-Allow-Origin', '*')
       headers.set('Accept-Ranges', 'bytes')
       headers.set('Cache-Control', 'public, max-age=86400')
