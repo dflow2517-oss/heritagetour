@@ -32,17 +32,18 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
   const ytId = hasVideo ? getYouTubeId(embedUrl!) : null
 
   if (hasVideo && !ytId) {
+    const ismov = embedUrl!.toLowerCase().includes('.mov')
     return (
       <video
-        src={embedUrl!}
         poster={posterUrl ?? undefined}
         controls
         playsInline
-        preload="metadata"
-        crossOrigin="anonymous"
+        preload="none"
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
-      />
+      >
+        <source src={embedUrl!} type={ismov ? 'video/quicktime' : 'video/mp4'} />
+      </video>
     )
   }
 
