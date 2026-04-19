@@ -13,19 +13,8 @@ function isPlaceholder(url: string | null): boolean {
 export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
   const hasVideo = !isPlaceholder(embedUrl)
 
-  return (
-    <a
-      href={hasVideo ? embedUrl! : undefined}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block aspect-video flex items-center justify-center relative overflow-hidden press-shadow"
-      style={{
-        background: '#2a1810',
-        border: '2px solid #2a1810',
-        cursor: hasVideo ? 'pointer' : 'default',
-        textDecoration: 'none',
-      }}
-    >
+  const inner = (
+    <>
       {posterUrl && (
         <div
           className="absolute inset-0"
@@ -50,6 +39,29 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
           {hasVideo ? '[ Watch on YouTube ]' : '[ Video Coming Soon ]'}
         </div>
       </div>
-    </a>
+    </>
+  )
+
+  const boxClass = "aspect-video flex items-center justify-center relative overflow-hidden press-shadow"
+  const boxStyle = { background: '#2a1810', border: '2px solid #2a1810' }
+
+  if (hasVideo) {
+    return (
+      <a
+        href={embedUrl!}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={boxClass}
+        style={{ ...boxStyle, textDecoration: 'none' }}
+      >
+        {inner}
+      </a>
+    )
+  }
+
+  return (
+    <div className={boxClass} style={boxStyle}>
+      {inner}
+    </div>
   )
 }
