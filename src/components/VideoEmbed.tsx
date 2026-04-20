@@ -6,15 +6,30 @@ interface VideoEmbedProps {
   posterUrl?: string | null
 }
 
-function getYouTubeId(url: string): string | null {
+function getIframeUrl(url: string): string | null {
   try {
     const u = new URL(url)
-    if (u.pathname.startsWith('/shorts/')) {
-      return u.pathname.replace('/shorts/', '').split('/')[0]
+
+    // Cloudflare Stream
+    if (u.hostname.includes('cloudflarestream.com') || u.hostname.includes('stream.cloudflare.com')) {
+      return url
     }
+
+    // YouTube Shorts
+    if (u.hostname.includes('youtube.com') && u.pathname.startsWith('/shorts/')) {
+      const id = u.pathname.replace('/shorts/', '').split('/')[0]
+      return `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`
+    }
+
+    // YouTube regular
     const v = u.searchParams.get('v')
-    if (v) return v
-    if (u.hostname === 'youtu.be') return u.pathname.slice(1).split('/')[0]
+    if (v) return `https://www.youtube.com/embed/${v}?playsinline=1&rel=0`
+
+    // youtu.be
+    if (u.hostname === 'youtu.be') {
+      return `https://www.youtube.com/embed/${u.pathname.slice(1).split('/')[0]}?playsinline=1&rel=0`
+    }
+
     return null
   } catch {
     return null
@@ -27,12 +42,22 @@ function isPlaceholder(url: string | null): boolean {
 
 export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
   const hasVideo = !isPlaceholder(embedUrl)
-  const ytId = hasVideo ? getYouTubeId(embedUrl!) : null
+  const iframeUrl = hasVideo ? getIframeUrl(embedUrl!) : null
 
-  if (hasVideo && !ytId) {
-    const src = embedUrl!.startsWith('/videos/')
-      ? embedUrl!
-      : `/videos/${embedUrl!.split('/').pop()}`
+  if (hasVideo && iframeUrl) {
+    return (
+      <iframe
+        src={iframeUrl}
+        className="w-full aspect-video"
+        style={{ border: '2px solid #2a1810', display: 'block' }}
+        allowFullScreen
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+        title={label ?? 'Video'}
+      />
+    )
+  }
+
+  if (hasVideo && !iframeUrl) {
     return (
       <video
         poster={posterUrl ?? undefined}
@@ -42,21 +67,8 @@ export function VideoEmbed({ embedUrl, label, posterUrl }: VideoEmbedProps) {
         className="w-full aspect-video"
         style={{ border: '2px solid #2a1810', display: 'block', background: '#2a1810' }}
       >
-        <source src={src} />
+        <source src={embedUrl!} />
       </video>
-    )
-  }
-
-  if (hasVideo && ytId) {
-    return (
-      <iframe
-        src={`https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0`}
-        className="w-full aspect-video"
-        style={{ border: '2px solid #2a1810', display: 'block' }}
-        allowFullScreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        title={label ?? 'Video'}
-      />
     )
   }
 
