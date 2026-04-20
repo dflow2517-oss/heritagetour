@@ -21,3 +21,7 @@ where name = '1909 Randall County Courthouse';
 update stops
 set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/b08283a1ada10ae43758b12a28f6c9ac/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2Fb08283a1ada10ae43758b12a28f6c9ac%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
 where name = 'Tex Randall';
+
+update stops
+set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/0b70fa8dd9b15b412900f3fdd7cbf9fb/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2F0b70fa8dd9b15b412900f3fdd7cbf9fb%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
+where name = 'T Anchor Ranch Headquarters Cabin';
