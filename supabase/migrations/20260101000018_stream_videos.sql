@@ -7,5 +7,5 @@ set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/2a
 where name = 'Shirley House';
 
 update stops
-set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/dd5131da7e79c507d0f8d3f38537e7ad/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2Fdd5131da7e79c507d0f8d3f38537e7ad%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
+set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/18e21948f9b4a164a7a186174444594b/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2F18e21948f9b4a164a7a186174444594b%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
 where name = 'First National Bank Building';
