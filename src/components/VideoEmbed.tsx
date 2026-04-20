@@ -10,9 +10,14 @@ function getIframeUrl(url: string): string | null {
   try {
     const u = new URL(url)
 
-    // Cloudflare Stream
-    if (u.hostname.includes('cloudflarestream.com') || u.hostname.includes('stream.cloudflare.com')) {
+    // Cloudflare Stream iframe embed
+    if (u.hostname.includes('cloudflarestream.com') && u.pathname.includes('/iframe')) {
       return url
+    }
+
+    // Cloudflare Stream direct download — use as native video (return null)
+    if (u.hostname.includes('cloudflarestream.com')) {
+      return null
     }
 
     // YouTube Shorts
