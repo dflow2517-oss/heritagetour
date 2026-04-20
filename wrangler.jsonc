@@ -2,10 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "heritagetour",
   "compatibility_date": "2026-04-18",
+  "main": "worker.ts",
   "observability": {
     "enabled": true
   },
   "assets": {
+    "binding": "ASSETS",
     "directory": "dist",
     "not_found_handling": "single-page-application"
   },
