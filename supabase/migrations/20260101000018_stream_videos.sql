@@ -17,3 +17,7 @@ where name = 'Panhandle-Plains Historical Museum';
 update stops
 set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/cf831a90922d68135297f7ec986d6ffa/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2Fcf831a90922d68135297f7ec986d6ffa%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
 where name = '1909 Randall County Courthouse';
+
+update stops
+set video_embed_url = 'https://customer-v529ask73cobmh0b.cloudflarestream.com/b08283a1ada10ae43758b12a28f6c9ac/iframe?poster=https%3A%2F%2Fcustomer-v529ask73cobmh0b.cloudflarestream.com%2Fb08283a1ada10ae43758b12a28f6c9ac%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600'
+where name = 'Tex Randall';
