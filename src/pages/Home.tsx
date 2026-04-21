@@ -74,7 +74,7 @@ export function Home() {
             style={{ color: '#2a1810' }}
           >
             {tour?.description ??
-              "A short tour through the buildings and sites that established this pioneer town in the Texas Panhandle."}
+              "Walk the same streets where ranchers, merchants, and homesteaders built a town from scratch on the high plains of the Texas Panhandle."}
           </p>
         </div>
 
