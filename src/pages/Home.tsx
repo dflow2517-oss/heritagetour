@@ -158,7 +158,7 @@ export function Home() {
               className="type-font text-xs tracking-[0.25em] uppercase"
               style={{ color: '#8b4513' }}
             >
-              The Six Stops
+              The Ten Stops
             </div>
             <div style={{ flex: 1, height: '1px', background: '#2a1810', opacity: 0.3 }} />
           </div>
@@ -174,7 +174,7 @@ export function Home() {
           style={{ borderTop: '1px solid rgba(42,24,16,0.2)' }}
         >
           <div className="type-font text-xs tracking-widest uppercase opacity-60">
-            A GoRoute66 &middot; Wolf Goes West Production
+            Randall County Historical Commission
           </div>
         </div>
       </div>

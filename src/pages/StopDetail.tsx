@@ -113,7 +113,7 @@ export function StopDetail() {
         {/* Video */}
         <div className="mb-8">
           <div className="type-font text-xs tracking-widest uppercase mb-2 opacity-70">
-            Wolf Goes West · Video
+            Video
           </div>
           <VideoEmbed
             embedUrl={stop.video_embed_url}
