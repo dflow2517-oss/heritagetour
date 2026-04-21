@@ -50,11 +50,11 @@ export function Home() {
           className="display-font text-center text-5xl md:text-7xl font-black leading-none mt-6 mb-3"
           style={{ color: '#2a1810' }}
         >
-          Canyon
+          Canyon, Texas
         </h1>
         <div className="text-center mb-8">
           <div className="display-font italic text-2xl md:text-3xl" style={{ color: '#b8491c' }}>
-            {tour?.name ?? 'A Heritage Walking Tour'}
+            A Heritage Tour
           </div>
         </div>
 
